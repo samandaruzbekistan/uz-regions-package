@@ -14,20 +14,23 @@ class UzRegionsServiceProvider extends ServiceProvider
 
     public function boot()
     {
+        // Migrations
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
+        // Seeders
         $this->publishes([
             __DIR__ . '/database/seeders' => database_path('seeders'),
         ], 'seeders');
 
+        // Models
+        $this->publishes([
+            __DIR__ . '/Models' => app_path('Models'),
+        ], 'models');
+
+        // MigrateAndSeed command
         $this->commands([
             MigrateAndSeed::class,
         ]);
     }
 
 }
-
-//function database_path1($path = '')
-//{
-//    return __DIR__ . '/database/' . ($path ? DIRECTORY_SEPARATOR . $path : $path);
-//}
