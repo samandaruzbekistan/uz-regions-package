@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Village extends Model
 {
-    protected $table = 'villages'; // Jadval nomi
+    protected $table = 'villages';
 
     protected $fillable = [
         'id', 'district_id', 'name_uz', 'name_oz', 'name_ru'
