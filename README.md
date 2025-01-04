@@ -6,7 +6,7 @@ This package allows you to import information about Uzbekistan's regions, distri
 
 1. Install the package via Composer:
 ```bash
-composer require samandaruzbekistan/uz-regions-package
+composer require "samandaruzbekistan/uz-regions-package:1.0"
 ```
 
 2. Add the ServiceProvider in `config/app.php`:
