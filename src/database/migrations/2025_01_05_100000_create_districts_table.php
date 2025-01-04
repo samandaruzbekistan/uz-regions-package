@@ -14,8 +14,6 @@ class CreateDistrictsTable extends Migration
             $table->string('name_uz');
             $table->string('name_oz');
             $table->string('name_ru');
-            $table->timestamps();
-
             $table->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
         });
     }

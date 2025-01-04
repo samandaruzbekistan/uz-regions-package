@@ -14,8 +14,6 @@ class CreateVillagesTable extends Migration
             $table->string('name_uz');
             $table->string('name_oz');
             $table->string('name_ru');
-            $table->timestamps();
-
             $table->foreign('district_id')->references('id')->on('districts')->onDelete('cascade');
         });
     }

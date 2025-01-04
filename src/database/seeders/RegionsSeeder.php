@@ -11,45 +11,49 @@ class RegionsSeeder extends Seeder
     public function run()
     {
         // Regions
-        $regions = $this->getJsonData('regions.json');
+        $regions = $this->getXmlData('regions.xml', 'regions');
         DB::table('regions')->insert($regions);
 
         // Districts
-        $districts = $this->getJsonData('districts.json');
+        $districts = $this->getXmlData('districts.xml', 'districts');
         DB::table('districts')->insert($districts);
 
         // Villages
-        $villages = $this->getJsonData('villages.json');
+        $villages = $this->getXmlData('villages.xml', 'villages');
         DB::table('villages')->insert($villages);
     }
 
     /**
-     * Helper function to read JSON data and prepare it for insertion
+     * Helper function to read XML data and prepare it for insertion
      */
-    private function getJsonData($filename)
+    private function getXmlData($filename, $table)
     {
         $filePath = __DIR__ . '/../data/' . $filename;
-        $jsonData = File::get($filePath);
-        $data = json_decode($jsonData, true);
+        $xml = simplexml_load_file($filePath);
+
+        // Convert the XML to array
+        $xmlJson = json_encode($xml);
+        $data = json_decode($xmlJson, true);
 
         // Prepare data for insertion
         $preparedData = [];
-        foreach ($data as $item) {
-            $preparedData1 = [
-                'id' => $item['id'],
-                'name_uz' => $item['name_uz'],
-                'name_oz' => $item['name_oz'],
-                'name_ru' => $item['name_ru'],
+        $tableKey = 'table_' . $table;
+
+        // Loop through the specific table data (regions, districts, or villages)
+        foreach ($data[$tableKey][$table] as $item) {
+            $preparedData[] = [
+                'id' => $item['@attributes']['id'],
+                'name_uz' => (string)$item['@attributes']['name_uz'],
+                'name_oz' => (string)$item['@attributes']['name_oz'],
+                'name_ru' => (string)$item['@attributes']['name_ru'],
             ];
 
-            if (isset($item['region_id'])) {
-                $preparedData1['region_id'] = $item['region_id'];
-            } elseif (isset($item['district_id'])) {
-                $preparedData1['district_id'] = $item['district_id'];
+            // Add additional fields based on the type of data (regions, districts, villages)
+            if ($table === 'districts') {
+                $preparedData[count($preparedData) - 1]['region_id'] = $item['@attributes']['region_id'];
+            } elseif ($table === 'villages') {
+                $preparedData[count($preparedData) - 1]['district_id'] = $item['@attributes']['district_id'];
             }
-
-            // Add the prepared data to the main array
-            $preparedData[] = $preparedData1;
         }
 
         return $preparedData;
