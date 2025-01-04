@@ -3,7 +3,7 @@
         'name' => 'samandaruzbekistan/uz-regions-package',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '5a3f916ae77c737855da2a5708d3c97ac6fbcf34',
+        'reference' => '63533dab43470d14b57077b519bfd83bcb736624',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -229,7 +229,7 @@
         'samandaruzbekistan/uz-regions-package' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '5a3f916ae77c737855da2a5708d3c97ac6fbcf34',
+            'reference' => '63533dab43470d14b57077b519bfd83bcb736624',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
